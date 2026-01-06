@@ -1,3 +1,4 @@
+package Shapes;
 
 public class Index2D implements Pixel2D {
     private int _x, _y;
@@ -14,9 +15,11 @@ public class Index2D implements Pixel2D {
     }
     public double distance2D(Pixel2D t) {
         double ans = 0;
-        /////// add your code below ///////
-
-        ///////////////////////////////////
+        double dx = this._x - t.getX();
+        double dy = this._y - t.getY();
+        double pdx = Math.pow(dx, 2);
+        double pdy = Math.pow(dy, 2);
+        ans=Math.sqrt(pdx + pdy);
         return ans;
     }
     @Override
@@ -26,12 +29,10 @@ public class Index2D implements Pixel2D {
     @Override
     public boolean equals(Object t) {
         boolean ans = false;
-       /////// you do NOT need to add your code below ///////
         if(t instanceof Pixel2D) {
             Pixel2D p = (Pixel2D) t;
             ans = (this.distance2D(p)==0);
         }
-       ///////////////////////////////////
         return ans;
     }
 }

@@ -14,10 +14,10 @@ public class ManualAlgo implements PacManAlgo{
         int ans = PacmanGame.ERR;
         Character cmd = Ex3Main.getCMD();
             if (cmd != null) {
-                if (cmd == 'w') {ans = PacmanGame.UP;}
-                if (cmd == 'x') {ans = PacmanGame.DOWN;}
-                if (cmd == 'a') {ans = PacmanGame.LEFT;}
-                if (cmd == 'd') {ans = PacmanGame.RIGHT;}
+                if (cmd == 'w' || cmd == '\'') {ans = PacmanGame.UP;}
+                if (cmd == 's' || cmd == 'ד') {ans = PacmanGame.DOWN;}
+                if (cmd == 'a' || cmd == 'ש') {ans = PacmanGame.LEFT;}
+                if (cmd == 'd' || cmd == 'ג') {ans = PacmanGame.RIGHT;}
             }
             return  ans;
     }

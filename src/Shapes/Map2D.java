@@ -1,4 +1,4 @@
-
+package Shapes;
 
 /**
  * This interface represents a 2D map as a raster matrix or maze.
