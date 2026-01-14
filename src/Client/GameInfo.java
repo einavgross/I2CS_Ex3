@@ -1,3 +1,6 @@
+package Client;
+
+import Server.ManualAlgo;
 import exe.ex3.game.PacManAlgo;
 /**
  * This class contains all the needed parameters for the Pacman game.

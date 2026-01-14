@@ -1,3 +1,5 @@
+package Client;
+
 import Shapes.Index2D;
 import Shapes.Map;
 import Shapes.Map2D;
@@ -276,6 +278,14 @@ public class Ex3Algo implements PacManAlgo{
         else return escapeDir;
     }
 
+    /**
+     * this function compute the direction for the Pacman to move to, according to the next step in the shortest path to the target
+     * @param pos the Pacman's position
+     * @param map Map2D object representing the board
+     * @param blue integer representing the walls color
+     * @param target the target for the Pacman (the closest pink dot)
+     * @return int representing the direction for the pacman
+     */
     public static int getDirection(Pixel2D pos, Map2D map, int blue, Pixel2D target) {
         int up = Game.UP, left = Game.LEFT, down = Game.DOWN, right = Game.RIGHT;
         int dir = 0;
