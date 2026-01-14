@@ -59,86 +59,9 @@ public class Ex3Algo implements PacManAlgo{
             }
         }
         if (dangerGhostPos != null) {
-            System.out.println("FLEEING!");
             return getEscapeDirection(pos, map, blue, dangerGhostPos);
         }
         return searchForPink(pos, map, distMap, blue, pink);
-    }
-
-    private int getEscapeDirection(Pixel2D pos, Map2D map, int blue, Pixel2D ghostPos) {
-        int up = Game.UP, left = Game.LEFT, down = Game.DOWN, right = Game.RIGHT;
-        int escapeDir =0;
-        double maxDist = -1;
-        if (!map.isCyclic()) {
-            Pixel2D nextUp = new Index2D(pos.getX(), pos.getY() + 1);
-            if (map.isInside(nextUp) && map.getPixel(nextUp) != blue) {
-                double d = nextUp.distance2D(ghostPos);
-                if (d > maxDist) {
-                    maxDist = d;
-                    escapeDir = up;
-                }
-            }
-            Pixel2D nextDown = new Index2D(pos.getX(), pos.getY() - 1);
-            if (map.isInside(nextDown) && map.getPixel(nextDown) != blue) {
-                double d = nextDown.distance2D(ghostPos);
-                if (d > maxDist) {
-                    maxDist = d;
-                    escapeDir = down;
-                }
-            }
-            Pixel2D nextLeft = new Index2D(pos.getX() - 1, pos.getY());
-            if (map.isInside(nextLeft) && map.getPixel(nextLeft) != blue) {
-                double d = nextLeft.distance2D(ghostPos);
-                if (d > maxDist) {
-                    maxDist = d;
-                    escapeDir = left;
-                }
-            }
-            Pixel2D nextRight = new Index2D(pos.getX() + 1, pos.getY());
-            if (map.isInside(nextRight) && map.getPixel(nextRight) != blue) {
-                double d = nextRight.distance2D(ghostPos);
-                if (d > maxDist) {
-                    maxDist = d;
-                    escapeDir = right;
-                }
-            }
-        }
-        else {
-            Pixel2D nextUp = new Index2D(pos.getX(), (pos.getY() + (map.getHeight() + 1)) % map.getHeight());
-            if (map.isInside(nextUp) && map.getPixel(nextUp) != blue) {
-                double d = nextUp.distance2D(ghostPos);
-                if (d > maxDist) {
-                    maxDist = d;
-                    escapeDir = up;
-                }
-            }
-            Pixel2D nextDown = new Index2D(pos.getX(), (pos.getY() - 1) % map.getHeight());
-            if (map.isInside(nextDown) && map.getPixel(nextDown) != blue) {
-                double d = nextDown.distance2D(ghostPos);
-                if (d > maxDist) {
-                    maxDist = d;
-                    escapeDir = down;
-                }
-            }
-            Pixel2D nextLeft = new Index2D((pos.getX() + (map.getWidth() - 1)) % map.getWidth(), pos.getY());
-            if (map.isInside(nextLeft) && map.getPixel(nextLeft) != blue) {
-                double d = nextLeft.distance2D(ghostPos);
-                if (d > maxDist) {
-                    maxDist = d;
-                    escapeDir = left;
-                }
-            }
-            Pixel2D nextRight = new Index2D((pos.getX() + 1) % map.getWidth(), pos.getY());
-            if (map.isInside(nextRight) && map.getPixel(nextRight) != blue) {
-                double d = nextRight.distance2D(ghostPos);
-                if (d > maxDist) {
-                    maxDist = d;
-                    escapeDir = right;
-                }
-            }
-        }
-        if (escapeDir == 0) return randomDir();
-        else return escapeDir;
     }
 
     private static void printBoard(int[][] b) {
@@ -257,7 +180,7 @@ public class Ex3Algo implements PacManAlgo{
      * @return int representing the direction for the pacman,if target is null, return random direction, using randomDir()
      * this function checks if the next step for target is under/above/besides to the pacman, and return the direction to it
      */
-    private static int searchForPink(Pixel2D pos, Map2D map,Map2D distMap ,int blue, int pink) {
+    public static int searchForPink(Pixel2D pos, Map2D map,Map2D distMap ,int blue, int pink) {
         Pixel2D target = closestPink(pos,map,distMap,blue,pink);
         int dir=0;
         if (target != null ) {
@@ -269,7 +192,91 @@ public class Ex3Algo implements PacManAlgo{
         return dir;
     }
 
-    private static int getDirection(Pixel2D pos, Map2D map, int blue, Pixel2D target) {
+    /**
+     * this function compute the direction for the Pacman to escape when close to a ghost
+     * @param pos the Pacman position
+     * @param map the map of the game
+     * @param blue an integer representing the walls color
+     * @param ghostPos the ghost position
+     * @return int representing the direction for the pacman to escape,if target is null, return random direction, using randomDir()
+     */
+    public static int getEscapeDirection(Pixel2D pos, Map2D map, int blue, Pixel2D ghostPos) {
+        int up = Game.UP, left = Game.LEFT, down = Game.DOWN, right = Game.RIGHT;
+        int escapeDir =0;
+        double maxDist = -1;
+        if (!map.isCyclic()) {
+            Pixel2D nextUp = new Index2D(pos.getX(), pos.getY() + 1);
+            if (map.isInside(nextUp) && map.getPixel(nextUp) != blue) {
+                double d = nextUp.distance2D(ghostPos);
+                if (d > maxDist) {
+                    maxDist = d;
+                    escapeDir = up;
+                }
+            }
+            Pixel2D nextDown = new Index2D(pos.getX(), pos.getY() - 1);
+            if (map.isInside(nextDown) && map.getPixel(nextDown) != blue) {
+                double d = nextDown.distance2D(ghostPos);
+                if (d > maxDist) {
+                    maxDist = d;
+                    escapeDir = down;
+                }
+            }
+            Pixel2D nextLeft = new Index2D(pos.getX() - 1, pos.getY());
+            if (map.isInside(nextLeft) && map.getPixel(nextLeft) != blue) {
+                double d = nextLeft.distance2D(ghostPos);
+                if (d > maxDist) {
+                    maxDist = d;
+                    escapeDir = left;
+                }
+            }
+            Pixel2D nextRight = new Index2D(pos.getX() + 1, pos.getY());
+            if (map.isInside(nextRight) && map.getPixel(nextRight) != blue) {
+                double d = nextRight.distance2D(ghostPos);
+                if (d > maxDist) {
+                    maxDist = d;
+                    escapeDir = right;
+                }
+            }
+        }
+        else {
+            Pixel2D nextUp = new Index2D(pos.getX(), (pos.getY() + (map.getHeight() + 1)) % map.getHeight());
+            if (map.isInside(nextUp) && map.getPixel(nextUp) != blue) {
+                double d = nextUp.distance2D(ghostPos);
+                if (d > maxDist) {
+                    maxDist = d;
+                    escapeDir = up;
+                }
+            }
+            Pixel2D nextDown = new Index2D(pos.getX(), (pos.getY() - 1) % map.getHeight());
+            if (map.isInside(nextDown) && map.getPixel(nextDown) != blue) {
+                double d = nextDown.distance2D(ghostPos);
+                if (d > maxDist) {
+                    maxDist = d;
+                    escapeDir = down;
+                }
+            }
+            Pixel2D nextLeft = new Index2D((pos.getX() + (map.getWidth() - 1)) % map.getWidth(), pos.getY());
+            if (map.isInside(nextLeft) && map.getPixel(nextLeft) != blue) {
+                double d = nextLeft.distance2D(ghostPos);
+                if (d > maxDist) {
+                    maxDist = d;
+                    escapeDir = left;
+                }
+            }
+            Pixel2D nextRight = new Index2D((pos.getX() + 1) % map.getWidth(), pos.getY());
+            if (map.isInside(nextRight) && map.getPixel(nextRight) != blue) {
+                double d = nextRight.distance2D(ghostPos);
+                if (d > maxDist) {
+                    maxDist = d;
+                    escapeDir = right;
+                }
+            }
+        }
+        if (escapeDir == 0) return randomDir();
+        else return escapeDir;
+    }
+
+    public static int getDirection(Pixel2D pos, Map2D map, int blue, Pixel2D target) {
         int up = Game.UP, left = Game.LEFT, down = Game.DOWN, right = Game.RIGHT;
         int dir = 0;
         Pixel2D[] SP = map.shortestPath(pos, target, blue);
