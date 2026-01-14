@@ -234,12 +234,6 @@ public class Map implements Map2D {
         Map2D ans = new Map(data);
         if (start != null && isInside(start))
         {
-            /*ans = new Map(this.getMap());
-            for (int i=0; i<getWidth(); i++) {
-                for (int j=0; j<getHeight(); j++) {
-                    ans.getMap()[i][j]=-1;
-                }
-            }*/
             LinkedList<Pixel2D> q = new LinkedList<>();
             q.add(start);
             ans.setPixel(start, 0);
